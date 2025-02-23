@@ -86,7 +86,7 @@
       <h2>Buyer Questionnaire</h2>
     </header>
     
-    <form id="buyerForm">
+    <form id="buyerForm" action="/submit" method="POST">
       <!-- Section 1: Basic Information -->
       <div class="section">
         <h3>Basic Information</h3>
@@ -96,8 +96,8 @@
         <label for="contactInfo">Contact Information (Phone & Email):</label>
         <input type="text" id="contactInfo" name="contactInfo" required>
         
-        <label for="currentResidence">Current Residence:</label>
-        <input type="text" id="currentResidence" name="currentResidence">
+        <label for="currentResidence">Current Residence (City/Neighborhood):</label>
+        <input type="text" id="currentResidence" name="currentResidence" required>
         
         <label for="moveInDate">Desired Move-In Date:</label>
         <input type="date" id="moveInDate" name="moveInDate">
@@ -143,7 +143,7 @@
         <textarea id="mustHaveFeatures" name="mustHaveFeatures" rows="3" placeholder="e.g., modern kitchen, outdoor space, updated fixtures"></textarea>
         
         <label for="preferredLocation">Preferred Neighborhood/Area:</label>
-        <input type="text" id="preferredLocation" name="preferredLocation">
+        <input type="text" id="preferredLocation" name="preferredLocation" required>
         
         <label for="locationAttraction">What Attracts You to This Area?</label>
         <textarea id="locationAttraction" name="locationAttraction" rows="3" placeholder="Consider aspects like schools, safety, amenities, commute, etc."></textarea>
@@ -153,7 +153,7 @@
       <div class="section">
         <h3>Budget & Financial Considerations</h3>
         <label for="budget">Budget Range or Maximum Budget:</label>
-        <input type="text" id="budget" name="budget" placeholder="e.g., $300,000 - $500,000">
+        <input type="text" id="budget" name="budget" placeholder="e.g., $300,000 - $500,000" required>
         
         <label>Are you pre-approved for a mortgage?</label>
         <label><input type="radio" name="mortgageStatus" value="Yes" required> Yes</label>
@@ -176,46 +176,34 @@
         <label for="neighborhoodType">What type of neighborhood do you envision? (e.g., quiet and residential, vibrant and urban, family-friendly)</label>
         <input type="text" id="neighborhoodType" name="neighborhoodType">
         
-        <label for="lifestyleAmenities">Are there any amenities (e.g., parks, gyms, transit, cultural centers) that are especially important to you?</label>
+        <label for="lifestyleAmenities">Important Amenities (e.g., parks, gyms, transit, cultural centers):</label>
         <textarea id="lifestyleAmenities" name="lifestyleAmenities" rows="3"></textarea>
       </div>
       
       <!-- Section 6: Trade-Offs and Flexibility -->
       <div class="section">
         <h3>Trade-Offs and Flexibility</h3>
-        <label for="priorityTradeOff">If forced to choose, would you prefer a prime location or additional space/features? Please explain your reasoning:</label>
+        <label for="priorityTradeOff">If forced to choose, would you prefer a prime location or additional space/features? Please explain:</label>
         <textarea id="priorityTradeOff" name="priorityTradeOff" rows="3"></textarea>
         
-        <label for="willingnessCompromise">Which property aspects could you be flexible about? (e.g., property age, interior finishes, outdoor space, storage/utility space)</label>
+        <label for="willingnessCompromise">Which property aspects could you be flexible about? (e.g., property age, interior finishes, outdoor space, storage)</label>
         <textarea id="willingnessCompromise" name="willingnessCompromise" rows="3" placeholder="Please indicate your level of flexibility for each"></textarea>
         
-        <label for="dealBreakers">Are there any features or issues that would be a deal-breaker for you?</label>
+        <label for="dealBreakers">Any deal-breakers?</label>
         <textarea id="dealBreakers" name="dealBreakers" rows="3"></textarea>
       </div>
       
       <!-- Section 7: Final Comments -->
       <div class="section">
         <h3>Additional Information</h3>
-        <label for="additionalInfo">Please share any other details or preferences that could help me better understand your needs:</label>
+        <label for="additionalInfo">Any other details or preferences:</label>
         <textarea id="additionalInfo" name="additionalInfo" rows="3"></textarea>
       </div>
       
       <button type="submit" class="submit-button">Submit</button>
     </form>
-    
-    <div id="thankYouMessage" class="footer" style="display: none;">
-      <p>Thank you for filling out the questionnaire. I greatly appreciate your time and I will look these over and get back to you <3</p>
-    </div>
   </div>
-  
-  <script>
-    // Basic form submission handling to display thank you message
-    document.getElementById('buyerForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      this.style.display = 'none';
-      document.getElementById('thankYouMessage').style.display = 'block';
-      // Here, you could also add AJAX code to send the form data to your server.
-    });
-  </script>
 </body>
 </html>
+
+
