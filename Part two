@@ -1,0 +1,74 @@
+// server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Serve static files from the "public" folder
+app.use(express.static('public'));
+
+// Use body-parser to parse form submissions
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Route to handle form submissions
+app.post('/submit', (req, res) => {
+  const data = req.body;
+
+  // Create a basic summary report based on the submission
+  let summary = `
+    <html>
+    <head>
+      <title>Summary Report for ${data.fullName}</title>
+      <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; }
+        .report { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #007BFF; }
+        ul { line-height: 1.6; }
+      </style>
+    </head>
+    <body>
+      <div class="report">
+        <h1>Summary Report for ${data.fullName}</h1>
+        <p><strong>Current Residence:</strong> ${data.currentResidence}</p>
+        <p><strong>Desired Neighborhood:</strong> ${data.preferredLocation}</p>
+        <p><strong>Main Motivation:</strong> ${data.mainMotivation}</p>
+        <p><strong>Must-Have Features:</strong> ${data.mustHaveFeatures || "Not specified"}</p>
+        <p><strong>Budget Flexibility:</strong> ${data.budgetFlexibility}</p>
+  `;
+
+  // Add considerations if current and desired neighborhoods differ
+  if (data.currentResidence.trim().toLowerCase() !== data.preferredLocation.trim().toLowerCase()) {
+    summary += `
+      <h2>Key Considerations</h2>
+      <ul>
+        <li>Since you’re moving from ${data.currentResidence} to ${data.preferredLocation}, consider checking for differences in HOA fees.</li>
+        <li>Compare the school districts in your current area versus the new neighborhood.</li>
+        <li>Examine neighborhood layouts and local amenities that may differ between these areas.</li>
+        <li>Review any other local factors (e.g., safety, commute, community vibe) that might impact your decision.</li>
+      </ul>
+    `;
+  } else {
+    summary += `<p>Your current and desired locations appear similar. Ensure that any specific differences you care about are well-researched.</p>`;
+  }
+
+  summary += `
+        <h2>Additional Notes</h2>
+        <ul>
+          <li>Trade-Offs: ${data.priorityTradeOff || "Not specified"}</li>
+          <li>Flexibility: ${data.willingnessCompromise || "Not specified"}</li>
+          <li>Deal-Breakers: ${data.dealBreakers || "Not specified"}</li>
+        </ul>
+        <p>Thank you for your submission. I will review your information and get back to you soon!</p>
+      </div>
+    </body>
+    </html>
+  `;
+
+  // Send the summary report as the response
+  res.send(summary);
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
